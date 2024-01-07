@@ -9,7 +9,7 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.test</groupId>
-	<artifactId>device-api</artifactId>
+	<artifactId>device-management-service</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>device-api</name>
 	<description>Device management service</description>
