@@ -12,6 +12,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class PartialDeviceDto {
 
-    @NotBlank
+    @NotBlank(message = "brand must not be blank")
     private String brand;
 }

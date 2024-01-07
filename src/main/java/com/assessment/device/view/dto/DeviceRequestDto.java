@@ -13,10 +13,10 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class DeviceRequestDto {
 
-    @NotBlank
+    @NotBlank(message = "name must not be blank")
     private String name;
 
-    @NotBlank
+    @NotBlank(message = "brand must not be blank")
     private String brand;
 
 }

@@ -1,55 +1,68 @@
 package com.assessment.device.domain.service;
 
 import com.assessment.device.domain.model.Device;
+import com.assessment.device.domain.repository.DeviceRepository;
+import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.UUID;
 
 @Service
+@RequiredArgsConstructor
 public class DeviceService {
+
+    private final DeviceRepository repository;
+
     public List<Device> findAll() {
-        return List.of(
-                simpleDeviceBuilder()
-        );
+        return repository.findAll();
     }
 
-    public Device save(final Device device) {
+    public Device save(@Valid final Device device) {
         Objects.requireNonNull(device, "device must not be null");
-        return simpleDeviceBuilder();
+        return repository.save(device);
     }
 
-    public Optional<Device> findById(final String id) {
+    public Optional<Device> findById(final UUID id) {
         Objects.requireNonNull(id, "id must not be null");
-        return Optional.of(simpleDeviceBuilder());
+        return repository.findById(id);
     }
 
-    public List<Device> findByBrandName(final String brandName) {
-        Objects.requireNonNull(brandName, "brandName must not be null");
-        return List.of(
-                simpleDeviceBuilder()
-        );
+    public List<Device> findByBrandName(final String brand) {
+        Objects.requireNonNull(brand, "brand must not be null");
+        return repository.findDevicesByBrand(brand);
     }
 
-    public Optional<Device> update(final String id, final Device device) {
+    public Optional<Device> update(final UUID id, @Valid final Device deviceValue) {
         Objects.requireNonNull(id, "id must not be null");
-        Objects.requireNonNull(device, "device must not be null");
-        return Optional.of(simpleDeviceBuilder());
+        Objects.requireNonNull(deviceValue, "deviceValue must not be null");
+
+        return repository
+                .findById(id)
+                .map(device -> {
+                    device.setName(deviceValue.getName());
+                    device.setBrand(deviceValue.getBrand());
+                    return repository.save(device);
+                });
     }
 
-    public void deleteById(final String id) {
+    public Optional<Device> updateBrand(final UUID id, final String brand) {
         Objects.requireNonNull(id, "id must not be null");
+        Objects.requireNonNull(brand, "deviceValue must not be null");
+
+        return repository
+                .findById(id)
+                .map(device -> {
+                    device.setBrand(brand);
+                    return repository.save(device);
+                });
     }
 
-    private static Device simpleDeviceBuilder() {
-        return Device.builder()
-                .id(UUID.randomUUID())
-                .name("device name")
-                .brand("device brand")
-                .createdAt(ZonedDateTime.now())
-                .build();
+    public void deleteById(final UUID id) {
+        Objects.requireNonNull(id, "id must not be null");
+        repository.deleteById(id);
     }
 }
