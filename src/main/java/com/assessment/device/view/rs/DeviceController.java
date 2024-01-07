@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -67,14 +68,6 @@ public class DeviceController {
                 .orElse(ResponseEntity.notFound().build());
     }
 
-    @GetMapping
-    public ResponseEntity<List<DeviceResponseDto>> findAll() {
-        log.info("Listing all devices");
-        final var entities = service.findAll();
-        final var response = entities.stream().map(mapper::toDto).toList();
-        return ResponseEntity.ok(response);
-    }
-
     @PutMapping("/{id}")
     public ResponseEntity<DeviceResponseDto> update(@PathVariable final String id,
                                                     @Valid @RequestBody final DeviceRequestDto request) {
@@ -102,5 +95,21 @@ public class DeviceController {
     public void delete(@PathVariable final String id) {
         log.info("Delete device by id {}", id);
         service.deleteById(id);
+    }
+
+    @GetMapping
+    public ResponseEntity<List<DeviceResponseDto>> findAll(
+            @RequestParam(value = "brandName", required = false) final String brandName) {
+        if (brandName != null) {
+            log.info("Listing devices by brand {}", brandName);
+            final var entities = service.findByBrandName(brandName);
+            final var response = entities.stream().map(mapper::toDto).toList();
+            return ResponseEntity.ok(response);
+        } else {
+            log.info("Listing all devices");
+            final var entities = service.findAll();
+            final var response = entities.stream().map(mapper::toDto).toList();
+            return ResponseEntity.ok(response);
+        }
     }
 }

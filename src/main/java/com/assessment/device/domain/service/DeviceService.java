@@ -27,6 +27,13 @@ public class DeviceService {
         return Optional.of(simpleDeviceBuilder());
     }
 
+    public List<Device> findByBrandName(final String brandName) {
+        Objects.requireNonNull(brandName, "brandName must not be null");
+        return List.of(
+                simpleDeviceBuilder()
+        );
+    }
+
     public Optional<Device> update(final String id, final Device device) {
         Objects.requireNonNull(id, "id must not be null");
         Objects.requireNonNull(device, "device must not be null");
