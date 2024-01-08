@@ -1,14 +1,14 @@
 package com.assessment.device.domain.model;
 
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.PrePersist;
-import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
 import lombok.Setter;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.PrePersist;
+import javax.validation.constraints.NotBlank;
 import java.time.ZonedDateTime;
 import java.util.UUID;
 
@@ -32,13 +32,15 @@ public class Device {
     @Column(nullable = false)
     private ZonedDateTime createdAt;
 
-    protected Device() {
 
-    }
 
     public Device(final String name, final String brand) {
         this.name = name;
         this.brand = brand;
+    }
+
+    public Device() {
+
     }
 
     @PrePersist

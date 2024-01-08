@@ -5,7 +5,6 @@ import com.assessment.device.view.dto.DeviceRequestDto;
 import com.assessment.device.view.dto.DeviceResponseDto;
 import com.assessment.device.view.dto.PartialDeviceDto;
 import com.assessment.device.view.mapper.DeviceMapper;
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -23,6 +22,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import javax.validation.Valid;
 import java.net.URI;
 import java.util.List;
 import java.util.UUID;

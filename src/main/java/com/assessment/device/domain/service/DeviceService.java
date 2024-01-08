@@ -2,10 +2,10 @@ package com.assessment.device.domain.service;
 
 import com.assessment.device.domain.model.Device;
 import com.assessment.device.domain.repository.DeviceRepository;
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import javax.validation.Valid;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
